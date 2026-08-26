@@ -1,0 +1,21 @@
+var ano: inteiro
+var nome: texto
+var salario_mensal: real
+var usa_oculos: logico = falso
+var resposta: texto
+var idade: inteiro
+para var i = 1; i <= 3; i = i + 1 {
+    nome = leia("Digite seu nome:")
+    ano = inteiro(leia("Digite seu ano de nascimento:"))
+    salario_mensal = real(leia("Digite seu salário mensal"))
+    resposta = leia("Você usa óculos? V para Verdadeiro e F para Falso")
+    idade = 2026 - ano
+    se (resposta == 'V') {
+        usa_oculos = verdadeiro
+    }
+}
+se (usa_oculos) {
+    escreva(nome, "tem", idade, "anos, ganha R$", salario_mensal, "e usa óculos")
+} senão {
+    escreva(nome, "tem", idade, "anos, ganha R$", salario_mensal, "e não usa óculos")
+}
