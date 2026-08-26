@@ -6,7 +6,7 @@ var resposta: texto
 var idade: inteiro
 
 
-para (var i = 1; i <= 2; i = i+1)
+para (var i = 1; i <= 3; i = i+1)
 {
     nome = leia("Digite seu nome:")
     ano = inteiro(leia("Digite seu ano de nascimento:"))
