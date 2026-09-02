@@ -1,0 +1,24 @@
+var numeroAleatorio: inteiro
+var numero: inteiro
+var quantidade: inteiro = 0
+var soma: inteiro = 0
+var media: real
+numeroAleatorio = aleatorioEntre(1, 11)
+fazer {
+    numero = inteiro(leia("Digite um número inteiro (-1 para sair):"))
+    se (numero != -1
+) {
+        soma = soma + numero
+        quantidade = quantidade + 1
+    }
+    se (numero == numeroAleatorio) {
+        escreva("Parabens, você acertou!")
+    }
+    escreva(quantidade, "Número:", numero)
+} enquanto (quantidade < 10 e numero != -1
+ e numero != numeroAleatorio)
+se (quantidade > 0) {
+    media = soma / quantidade
+}
+escreva("Quantidade de valores lidos:", quantidade)
+escreva("Média dos valores:", media)
