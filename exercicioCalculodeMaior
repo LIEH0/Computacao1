@@ -1,0 +1,30 @@
+var nome: texto
+var nota1: real
+var nota2: real
+var media: real
+var maiorMedia: real = 0
+var nomeMaiorMedia: texto
+var quantidade: inteiro = 0
+fazer {
+    nome = leia("Digite o nome do aluno:")
+    nota1 = real(leia("Digite a primeira nota:"))
+    nota2 = real(leia("Digite a segunda nota:"))
+    se (nota1 < 0 ou nota2 < 0) {
+        escreva("Nota inválida. Encerrando o programa...")
+    } senao {
+        media = (nota1 * 2 + nota2 * 3) / 5
+        escreva(nome, ", sua média é ", media)
+        se (media >= 6) {
+            escreva(nome, ", você foi aprovado")
+        } senão {
+            escreva("Lamento, ", nome, ", mas você foi reprovado")
+        }
+        se (media > maiorMedia) {
+            maiorMedia = media
+            nomeMaiorMedia = nome
+        }
+        quantidade = quantidade + 1
+    }
+} enquanto (quantidade < 10 e nota1 >= 0 e nota2 >= 0)
+escreva("Aluno com a maior média: ", nomeMaiorMedia)
+escreva("Maior média: ", maiorMedia)
