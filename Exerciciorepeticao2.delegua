@@ -4,6 +4,7 @@ var salario_mensal: real
 var usa_oculos: logico = falso
 var resposta: texto
 var idade: inteiro
+var salario_anual: real
 para var i = 1; i <= 3; i = i + 1 {
     nome = leia("Digite seu nome:")
     ano = inteiro(leia("Digite seu ano de nascimento:"))
@@ -20,7 +21,6 @@ para var i = 1; i <= 3; i = i + 1 {
     } senão {
         escreva(nome, "tem", idade, "anos, ganha R$", salario_mensal, "e não usa óculos")
     }
-    var salario_anual: real
     salario_anual = 12 * salario_mensal
     se (salario_anual > 100000) {
         escreva('Você é muito rico!')
