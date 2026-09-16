@@ -1,0 +1,23 @@
+var cintura: real
+var altura: real
+var sapato: inteiro
+var indiceA: real
+var indiceB: real
+
+cintura = real(leia("Digite a medida da cintura em metros:"))
+altura = real(leia("Digite a medida da altura em metros:"))
+sapato = inteiro(leia("Digite a medida do sapato:"))
+
+indiceA = cintura * (sapato - (altura * 10))
+indiceB =(sapato + (altura * 10) - (cintura * 10))
+
+escreva("ÍndiceA:", indiceA)
+escreva("ÍndiceB:", indiceB)
+
+se (indiceA>indiceB) {
+    escreva("ÍndiceA é maior que o ÍndiceB");
+} senao se (indiceA<indiceB) {
+    escreva("ÍndiceA é menor que o ÍndiceB");
+} senao {
+    escreva("ÍndiceA é igual o ÍndiceB");
+}
