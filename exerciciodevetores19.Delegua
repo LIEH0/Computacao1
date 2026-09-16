@@ -1,0 +1,38 @@
+var nomes = []
+var medias = []
+var media: real
+var nota1: real
+var nota2: real
+var media_da_turma: real = 0
+var quantidade_de_alunos: inteiro
+quantidade_de_alunos = inteiro(leia("Digite a quantidade de estudantes:"))
+enquanto (quantidade_de_alunos <= 0) {
+    escreva("Quantidade inválida!")
+    quantidade_de_alunos = inteiro(leia("Digite a quantidade de estudantes:"))
+}
+para (var i = 1; i <= quantidade_de_alunos; i = i + 1) {
+    escreva("Aluno", i)
+    nomes.adicionar(leia("Digite o nome do(a) estudante:"))
+    nota1 = real(leia("Digite a primeira nota:"))
+    enquanto (nota1 < 0) {
+        escreva("Nota inválida!")
+        nota1 = real(leia("Digite a primeira nota:"))
+    }
+    nota2 = real(leia("Digite a segunda nota:"))
+    enquanto (nota2 < 0) {
+        escreva("Nota inválida!")
+        nota2 = real(leia("Digite a segunda nota:"))
+    }
+    media = (nota1 * 3 + nota2 * 4) / 7
+    medias.adicionar(media)
+    media_da_turma = media_da_turma + media
+}
+media_da_turma = media_da_turma / quantidade_de_alunos
+escreva("A média da turma foi", media_da_turma)
+escreva("Alunos com média inferior a 5 ou inferior à média da turma:")
+para (var i = 1; i <= quantidade_de_alunos; i = i + 1) {
+    se (medias[i - 1] < 5 ou medias[i - 1] < media_da_turma) {
+        escreva(nomes[i - 1])
+        medias[i - 1]
+    }
+}
