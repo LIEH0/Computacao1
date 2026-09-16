@@ -32,7 +32,6 @@ escreva("A média da turma foi", media_da_turma)
 escreva("Alunos com média inferior a 5 ou inferior à média da turma:")
 para (var i = 1; i <= quantidade_de_alunos; i = i + 1) {
     se (medias[i - 1] < 5 ou medias[i - 1] < media_da_turma) {
-        escreva(nomes[i - 1])
-        medias[i - 1]
+        escreva(nomes[i - 1],"com média de", medias[i - 1])
     }
 }
