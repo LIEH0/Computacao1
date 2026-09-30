@@ -1,0 +1,28 @@
+constante N = 6
+var nota1: real
+var nota2: real
+var nota3: real
+var media: real
+var media_das_medias: real = 0
+var tentativa: real
+para (var i = 1; i <= N; i = i + 1) {
+    escreva("Aluno", i)
+    nota1 = real(leia("Digite a nota da prova 1:"))
+    nota2 = real(leia("Digite a nota da prova 2:"))
+    nota3 = real(leia("Digite a nota da prova 3:"))
+    media = (nota1 * 4 + nota2 * 6 + nota3 * 3) / 13
+    escreva("A média ponderada foi", media)
+    media_das_medias = media_das_medias + media
+}
+media_das_medias = media_das_medias / N
+tentativa = real(leia("Qual é o valor da média das médias?"))
+enquanto (tentativa != media_das_medias) {
+    escreva(media_das_medias)
+    se (tentativa < media_das_medias) {
+        escreva("Valor baixo demais!")
+    } senão {
+        escreva("Valor alto demais!")
+    }
+    tentativa = real(leia("Qual é o valor da média das médias?"))
+}
+escreva("Parabéns, você é uma pessoa de extrema sorte!")
