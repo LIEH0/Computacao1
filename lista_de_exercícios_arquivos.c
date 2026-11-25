@@ -20,8 +20,7 @@ int main() {
 
     setlocale(LC_ALL, "Portuguese");
 
-    // Criando o arquivo CSV
-    arquivo = fopen("notas.csv", "w");
+    arquivo = fopen("notas.txt", "w");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir arquivo!\n");
@@ -35,8 +34,7 @@ int main() {
 
     fclose(arquivo);
 
-    // Abrindo o arquivo para leitura
-    arquivo = fopen("notas.csv", "r");
+    arquivo = fopen("notas.txt", "r");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir arquivo!\n");
@@ -77,12 +75,10 @@ int main() {
 
         nota[2][j] = '\0';
 
-        // Convertendo as notas para números
         nota1 = atof(nota[0]);
         nota2 = atof(nota[1]);
         nota3 = atof(nota[2]);
 
-        // Calculando a média do aluno
         media = (nota1 + nota2 + nota3) / 3;
 
         printf("Aluno: %s\n", nome);
