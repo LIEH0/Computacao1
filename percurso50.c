@@ -137,18 +137,17 @@ int indiceAtalho(int casa) {
 }
 
 int verificarAtalho(int quem) {
-    int i = indiceAtalho(posicoes[quem]);
+	int i = indiceAtalho(posicoes[quem]);
 
-    if (i < 0) {
-        return 0;
-    }
+	if (i < 0) {
+		return 0;
+	}
 
-    posicoes[quem] = atalhoDestino[i];
+	posicoes[quem] = atalhoDestino[i];
 
-    return atalhoDestino[i];
+	return atalhoDestino[i];
 }
 
-/* Retorna o indice de quem chegou na casa 50, ou -1 se ninguem chegou */
 int verificarVitoria() {
 	for (int i = 0; i < 3; i++) {
 		if (posicoes[i] >= CASA_FINAL) {
@@ -157,32 +156,21 @@ int verificarVitoria() {
 	}
 	return -1;
 }
-
-/* ========================================================================== */
-/*  CARTAS                                                                     */
-/* ========================================================================== */
-
-/* Coloca 1,2,3,4,5,6,0,0,0 em um vetor e embaralha (Fisher-Yates);
- * depois copia o vetor para a matriz 3x3.                                   */
+//================================== CARTAS
 void embaralharCartas() {
 	int valores[9] = { 1, 2, 3, 4, 5, 6, 0, 0, 0 };
 
 	for (int i = 8; i > 0; i--) {
-		int j = rand() % (i + 1);        /* sorteia um indice de 0 a i */
-		int guardado = valores[i];       /* troca valores[i] com valores[j] */
+		int j = rand() % (i + 1);
+		int guardado = valores[i];
 		valores[i] = valores[j];
 		valores[j] = guardado;
 	}
 	for (int k = 0; k < 9; k++) {
-		cartas[k / 3][k % 3] = valores[k];   /* k/3 = linha, k%3 = coluna */
+		cartas[k / 3][k % 3] = valores[k];
 	}
 }
-
-/* ========================================================================== */
-/*  TEXTOS AUXILIARES                                                          */
-/* ========================================================================== */
-
-/* "-" se o valor for negativo (ainda nao jogou), senao o proprio numero */
+//================================== TEXTOS
 void numeroTexto(int valor, char texto[]) {
 	if (valor < 0) {
 		strcpy(texto, "-");
@@ -191,7 +179,6 @@ void numeroTexto(int valor, char texto[]) {
 	}
 }
 
-/* "Nenhum", "14 -> 7" ou "-" (quando ainda nao jogou) */
 void atalhoTexto(int chegada, int destino, char texto[]) {
 	if (chegada < 0) {
 		strcpy(texto, "-");
@@ -201,11 +188,7 @@ void atalhoTexto(int chegada, int destino, char texto[]) {
 		snprintf(texto, 20, "%d -> %d", chegada, destino);
 	}
 }
-
-/* ========================================================================== */
-/*  TELA DO TERMINAL                                                           */
-/* ========================================================================== */
-
+//============================= TELA DO TERMINAL
 void mostrarCabecalho() {
 	printf("\n========================================\n");
 	printf("             PERCURSO 50\n");
@@ -224,15 +207,10 @@ void mostrarBordaTabuleiro() {
 	}
 	printf("+\n");
 }
-
-/* Cada casa tem duas linhas: o numero (com + ou - se for atalho) e as letras
- * dos participantes que estao nela.                                         */
 void mostrarTabuleiro() {
 	printf("\nTABULEIRO\n");
 	for (int l = 0; l < LINHAS; l++) {
 		mostrarBordaTabuleiro();
-
-		/* linha 1: numero da casa */
 		for (int c = 0; c < COLUNAS; c++) {
 			int casa = tabuleiro[l][c];
 			int i = indiceAtalho(casa);
@@ -249,8 +227,6 @@ void mostrarTabuleiro() {
 			printf("| %s%02d%c%s ", cor, casa, marca, corReset);
 		}
 		printf("|\n");
-
-		/* linha 2: letras dos participantes */
 		for (int c = 0; c < COLUNAS; c++) {
 			int casa = tabuleiro[l][c];
 			int quantos = 0;
@@ -269,7 +245,6 @@ void mostrarTabuleiro() {
 	}
 	mostrarBordaTabuleiro();
 
-	/* casa 0: fica fora das 50 casas */
 	printf("Inicio (casa 0): ");
 	for (int i = 0; i < 3; i++) {
 		if (posicoes[i] == 0) {
@@ -288,7 +263,6 @@ void mostrarLegenda() {
 	printf("  %s-%s atalho negativo: 14->7, 30->21, 47->15\n", corVermelho, corReset);
 }
 
-/* Mostra as 9 cartas. So a carta "revelada" (0 a 8) mostra o valor; -1 = nenhuma */
 void mostrarCartas(int revelada) {
 	printf("\nCARTAS (posicao:valor)\n");
 	for (int l = 0; l < 3; l++) {
@@ -305,7 +279,6 @@ void mostrarCartas(int revelada) {
 	}
 }
 
-/* Tabela com a situacao atual dos tres participantes */
 void mostrarJogadores() {
 	char carta[12], saida[12], chegada[12], atalho[20];
 
@@ -325,7 +298,6 @@ void mostrarJogadores() {
 	printf("+---------+-------+-------+----------------+-----------+---------------+\n");
 }
 
-/* Historico completo: todas as jogadas da partida, separadas por rodada */
 void mostrarHistorico() {
 	char atalho[20];
 
@@ -353,7 +325,6 @@ void mostrarHistorico() {
 	}
 }
 
-/* Mostra tudo na ordem pedida: cabecalho, tabuleiro, legenda, cartas, tabela, historico */
 void mostrarSituacao(int revelada) {
 	mostrarCabecalho();
 	mostrarTabuleiro();
@@ -362,12 +333,7 @@ void mostrarSituacao(int revelada) {
 	mostrarJogadores();
 	mostrarHistorico();
 }
-
-/* ========================================================================== */
-/*  JOGADA                                                                     */
-/* ========================================================================== */
-
-/* Executa a jogada da carta escolhida (0 a 8) pelo participante da vez */
+//================================= JOGADA
 void realizarJogada(int escolha) {
 	int quem = vez;
 	int valor = cartas[escolha / 3][escolha % 3];
@@ -375,25 +341,23 @@ void realizarJogada(int escolha) {
 	int chegada;
 	int destino = 0;
 
-	if (valor > 0) {                                 /* zero: nao anda */
+	if (valor > 0) {
 		posicoes[quem] = posicoes[quem] + valor;
 		if (posicoes[quem] > CASA_FINAL) {
-			posicoes[quem] = CASA_FINAL;             /* nunca passa de 50 */
+			posicoes[quem] = CASA_FINAL;
 		}
 	}
 	chegada = posicoes[quem];
 
-	if (valor > 0 && chegada < CASA_FINAL) {         /* atalho: so se parou na origem */
+	if (valor > 0 && chegada < CASA_FINAL) {
 		destino = verificarAtalho(quem);
 	}
 
-	/* guarda a situacao atual do participante */
 	ultimaCarta[quem] = valor;
 	ultimaSaida[quem] = saida;
 	ultimaChegada[quem] = chegada;
 	ultimoAtalho[quem] = destino;
 
-	/* guarda no historico */
 	histQuem[totalJogadas] = quem;
 	histCarta[totalJogadas] = valor;
 	histSaida[totalJogadas] = saida;
@@ -402,7 +366,6 @@ void realizarJogada(int escolha) {
 	histFinal[totalJogadas] = posicoes[quem];
 	totalJogadas++;
 
-	/* mostra o resultado na tela */
 	printf("\n>>> Carta escolhida: posicao %d\n", escolha + 1);
 	mostrarCartas(escolha);
 	printf("\n%s%s (%c)%s: ", corParticipante[quem], nomes[quem], letras[quem], corReset);
@@ -422,18 +385,17 @@ void realizarJogada(int escolha) {
 	vencedor = verificarVitoria();
 }
 
-/* Um turno completo: cartas novas, mostra a situacao, escolha, jogada */
 void jogarTurno() {
 	char pergunta[100];
 	int escolha;
 
-	embaralharCartas();                              /* embaralha de novo a cada turno */
+	embaralharCartas();
 
 	printf("\n\n################################################\n");
-	mostrarSituacao(-1);                             /* cartas todas escondidas */
+	mostrarSituacao(-1);
 
 	if (vez == ROBO_C) {
-		escolha = rand() % 9;                        /* o robo escolhe ao acaso */
+		escolha = rand() % 9;
 		printf("\nO Robo (C) esta escolhendo uma carta... escolheu a posicao %d.\n", escolha + 1);
 	} else {
 		snprintf(pergunta, sizeof(pergunta), "\n%s (%c), escolha uma posicao de 1 a 9: ", nomes[vez], letras[vez]);
@@ -441,26 +403,18 @@ void jogarTurno() {
 	}
 
 	realizarJogada(escolha);
-	vez = (vez + 1) % 3;                             /* ordem fixa: A -> B -> C -> A ... */
+	vez = (vez + 1) % 3;
 }
-
-/* ========================================================================== */
-/*  ARQUIVO TXT                                                                */
-/* ========================================================================== */
-
-/* Salva o historico da partida em historico_percurso50_N.txt.
- * Procura o primeiro numero livre para nunca sobrescrever um arquivo existente.
- * Retorna 1 se salvou, 0 se deu erro.                                        */
+//================================== ARQUIVO TXT
 int salvarHistoricoTXT() {
 	FILE *arquivo;
 	char atalho[20];
 
-	/* procura um nome de arquivo que ainda nao exista */
 	while (1) {
 		snprintf(nomeArquivo, sizeof(nomeArquivo), "historico_percurso50_%d.txt", numeroArquivo);
 		arquivo = fopen(nomeArquivo, "r");
 		if (arquivo == NULL) {
-			break;                                   /* nao existe: pode usar */
+			break;
 		}
 		fclose(arquivo);
 		numeroArquivo++;
@@ -471,7 +425,6 @@ int salvarHistoricoTXT() {
 		return 0;
 	}
 
-	/* cabecalho */
 	fprintf(arquivo, "========================================\n");
 	fprintf(arquivo, "             PERCURSO 50\n");
 	fprintf(arquivo, "          HISTORICO DA PARTIDA\n");
@@ -482,7 +435,6 @@ int salvarHistoricoTXT() {
 	        nomesTxt[vencedor], CASA_FINAL, (totalJogadas - 1) / 3 + 1);
 	fprintf(arquivo, "Vencedor: %s\n\n", nomesTxt[vencedor]);
 
-	/* historico separado por rodadas */
 	for (int j = 0; j < totalJogadas; j++) {
 		int quem = histQuem[j];
 
@@ -508,8 +460,6 @@ int salvarHistoricoTXT() {
 			fprintf(arquivo, "----------------------------------------\n\n");
 		}
 	}
-
-	/* resultado final */
 	fprintf(arquivo, "RESULTADO FINAL\n\n");
 	fprintf(arquivo, "Vencedor: %s\n\n", nomesTxt[vencedor]);
 	fprintf(arquivo, "========================================\n");
@@ -521,12 +471,7 @@ int salvarHistoricoTXT() {
 	}
 	return 1;
 }
-
-/* ========================================================================== */
-/*  PARTIDA E MENU                                                             */
-/* ========================================================================== */
-
-/* Zera tudo para uma partida nova (o Jogador A sempre comeca) */
+//============================== PARTIDA E MENU
 void reiniciarPartida() {
 	for (int i = 0; i < 3; i++) {
 		posicoes[i] = 0;
@@ -538,10 +483,10 @@ void reiniciarPartida() {
 	totalJogadas = 0;
 	vencedor = -1;
 	vez = JOGADOR_A;
-	mensagemVitoria[0] = '\0';       /* apaga a mensagem da partida anterior */
+	mensagemVitoria[0] = '\0';
 }
 
-/* Joga uma partida inteira e, no fim, salva o historico */
+
 void jogarPartida() {
 	reiniciarPartida();
 
@@ -549,13 +494,12 @@ void jogarPartida() {
 		jogarTurno();
 	}
 
-	if (vencedor < 0) {              /* nao deve acontecer: o historico encheu */
+	if (vencedor < 0) {
 		snprintf(mensagemVitoria, sizeof(mensagemVitoria),
 		         "Partida encerrada: limite de %d jogadas do historico.", MAX_JOGADAS);
 		return;
 	}
 
-	/* situacao final e mensagem de vitoria */
 	printf("\n\n################################################\n");
 	mostrarSituacao(-1);
 	printf("\n****************************************\n");
@@ -567,7 +511,7 @@ void jogarPartida() {
 		snprintf(mensagemVitoria, sizeof(mensagemVitoria),
 		         "Ultima partida: %s (%c) venceu!\nHistorico salvo em: %s",
 		         nomes[vencedor], letras[vencedor], nomeArquivo);
-		numeroArquivo++;             /* a proxima partida usa o proximo numero */
+		numeroArquivo++;
 	} else {
 		printf("\nERRO: nao foi possivel salvar o arquivo %s.\n", nomeArquivo);
 		snprintf(mensagemVitoria, sizeof(mensagemVitoria),
@@ -588,9 +532,9 @@ void mostrarMenu() {
 }
 
 void inicializarJogo() {
-	srand((unsigned int)time(NULL));                 /* inicia os sorteios (uma vez so) */
+	srand((unsigned int)time(NULL));
 
-	if (USAR_CORES == 0) {                           /* sem cores: todos os codigos viram texto vazio */
+	if (USAR_CORES == 0) {
 		corParticipante[0] = "";
 		corParticipante[1] = "";
 		corParticipante[2] = "";
@@ -615,6 +559,7 @@ int main() {
 		if (opcao == 1) {
 			jogarPartida();
 		} else {
+			printf("\nEncerrando...\n");
 			return 0;
 		}
 	}
